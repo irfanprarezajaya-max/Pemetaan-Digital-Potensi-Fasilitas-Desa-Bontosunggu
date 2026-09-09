@@ -4,167 +4,260 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Bontosunggu Digital</title>
+    <title>Pemetaan Digital Potensi & Fasilitas Desa Bontosunggu</title>
 
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
             background: #f5f7fa;
-            color: #1f2937;
+            color: #222;
+            line-height: 1.6;
         }
 
         /* NAVBAR */
-        nav {
-            background: #1769aa;
-            color: white;
-            padding: 18px 25px;
+        header {
+            background: white;
+            padding: 15px 7%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
         }
 
         .logo {
-            font-size: 21px;
-            font-weight: bold;
-        }
-
-        .menu {
             display: flex;
-            gap: 20px;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            color: #176b3a;
+            font-size: 18px;
         }
 
-        .menu a {
-            color: white;
+        .logo img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
             text-decoration: none;
-            font-size: 14px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: #176b3a;
         }
 
         /* HERO */
         .hero {
-            background: linear-gradient(
-                rgba(23,105,170,0.85),
-                rgba(23,105,170,0.85)
-            ),
-            url("IMG_7194.JPG");
-
-            background-size: cover;
-            background-position: center;
-
-            min-height: 500px;
-
+            min-height: 75vh;
             display: flex;
             align-items: center;
             justify-content: center;
-
             text-align: center;
+            padding: 50px 20px;
+            background:
+                linear-gradient(rgba(0,80,40,0.75), rgba(0,50,30,0.75)),
+                url("IMG_7194.JPG") center/cover;
             color: white;
-
-            padding: 40px 20px;
         }
 
         .hero-content {
-            max-width: 750px;
+            max-width: 850px;
         }
 
         .hero h1 {
-            font-size: 45px;
+            font-size: 46px;
             margin-bottom: 20px;
         }
 
         .hero p {
-            font-size: 19px;
-            line-height: 1.7;
+            font-size: 18px;
             margin-bottom: 30px;
         }
 
-        .button {
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
             display: inline-block;
-            background: white;
-            color: #1769aa;
-            padding: 13px 25px;
+            padding: 12px 22px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
+            background: white;
+            color: #176b3a;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
         }
 
         /* SECTION */
         section {
-            padding: 60px 25px;
-            max-width: 1100px;
-            margin: auto;
+            padding: 70px 7%;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 35px;
+            margin-bottom: 45px;
         }
 
         .section-title h2 {
-            font-size: 30px;
-            color: #1769aa;
+            font-size: 32px;
+            color: #176b3a;
             margin-bottom: 10px;
         }
 
         .section-title p {
-            color: #6b7280;
+            color: #666;
+        }
+
+        /* PROFIL */
+        .profil {
+            background: white;
+        }
+
+        .profil-box {
+            max-width: 900px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .profil-box p {
+            font-size: 17px;
+            color: #555;
+        }
+
+        .dusun-container {
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .dusun {
+            background: #eaf5ee;
+            color: #176b3a;
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-weight: bold;
         }
 
         /* CARDS */
         .cards {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
         }
 
         .card {
             background: white;
-            padding: 30px 20px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-        }
-
-        .card .icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-
-        .card h3 {
-            margin-bottom: 10px;
-            color: #1769aa;
-        }
-
-        .card p {
-            color: #6b7280;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        /* ABOUT */
-        .about {
-            background: white;
             border-radius: 15px;
-            padding: 35px;
-            line-height: 1.8;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-image {
+            height: 170px;
+            background: linear-gradient(135deg, #176b3a, #4cae70);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 55px;
+        }
+
+        .card-content {
+            padding: 22px;
+        }
+
+        .card-content h3 {
+            color: #176b3a;
+            margin-bottom: 10px;
+            font-size: 21px;
+        }
+
+        .card-content p {
+            color: #666;
+            margin-bottom: 18px;
+        }
+
+        .maps-btn {
+            display: inline-block;
+            background: #176b3a;
+            color: white;
+            padding: 9px 15px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .maps-btn:hover {
+            background: #0e4d29;
+        }
+
+        /* DUSUN */
+        .dusun-section {
+            background: #f5f7fa;
+        }
+
+        .dusun-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .dusun-card {
+            background: white;
+            padding: 25px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .dusun-card span {
+            font-size: 35px;
+        }
+
+        .dusun-card h3 {
+            color: #176b3a;
+            margin-top: 10px;
         }
 
         /* FOOTER */
         footer {
-            background: #123b5d;
+            background: #123d26;
             color: white;
             text-align: center;
             padding: 30px 20px;
-            margin-top: 40px;
         }
 
         footer p {
@@ -173,48 +266,27 @@
         }
 
         /* MOBILE */
-        @media (max-width: 768px) {
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+            }
 
             nav {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .menu {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 12px;
-            }
-
-            .hero {
-                min-height: 450px;
+                gap: 15px;
+                font-size: 14px;
             }
 
             .hero h1 {
-                font-size: 34px;
+                font-size: 32px;
             }
 
             .hero p {
                 font-size: 16px;
             }
 
-            .cards {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 480px) {
-
-            .cards {
-                grid-template-columns: 1fr;
-            }
-
-            .hero h1 {
-                font-size: 29px;
-            }
-
             section {
-                padding: 45px 18px;
+                padding: 50px 5%;
             }
         }
     </style>
@@ -222,335 +294,409 @@
 
 <body>
 
-    <!-- NAVBAR -->
+<!-- NAVBAR -->
+<header>
+
+    <div class="logo">
+        <img src="IMG_7194.JPG" alt="Logo Desa Bontosunggu">
+        <span>Desa Bontosunggu</span>
+    </div>
+
     <nav>
-
-        <div class="logo">
-            BONTOSUNGGU DIGITAL
-        </div>
-
-        <div class="menu">
-            <a href="#beranda">Beranda</a>
-            <a href="#profil">Profil</a>
-            <a href="#peta">Peta Desa</a>
-            <a href="#potensi">Potensi</a>
-            <a href="#fasilitas">Fasilitas</a>
-        </div>
-
+        <a href="#beranda">Beranda</a>
+        <a href="#potensi">Potensi Desa</a>
+        <a href="#fasilitas">Fasilitas Umum</a>
     </nav>
 
+</header>
 
-    <!-- HERO -->
-    <div class="hero" id="beranda">
 
-        <div class="hero-content">
+<!-- HERO -->
+<section class="hero" id="beranda">
 
-            <h1>
-                Desa Bontosunggu
-            </h1>
+    <div class="hero-content">
 
-            <p>
-                Pemetaan Potensi, Fasilitas,
-                dan Informasi Desa Bontosunggu
-            </p>
+        <h1>
+            Pemetaan Digital Potensi & Fasilitas Desa Bontosunggu
+        </h1>
 
-            <a href="#peta" class="button">
-                🗺️ Jelajahi Desa
+        <p>
+            Jelajahi potensi desa serta fasilitas umum yang terdapat
+            di Desa Bontosunggu melalui pemetaan digital.
+        </p>
+
+        <div class="buttons">
+            <a href="#potensi" class="btn">
+                Jelajahi Potensi Desa
             </a>
+
+            <a href="#fasilitas" class="btn">
+                Lihat Fasilitas
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PROFIL -->
+<section class="profil">
+
+    <div class="section-title">
+
+        <h2>Desa Bontosunggu</h2>
+
+        <p>
+            Mengenal wilayah dan pembagian dusun Desa Bontosunggu
+        </p>
+
+    </div>
+
+    <div class="profil-box">
+
+        <p>
+            Desa Bontosunggu memiliki lima dusun yang menjadi bagian
+            dari wilayah administratif desa. Pemetaan digital ini
+            menyajikan informasi potensi dan fasilitas yang terdapat
+            di Desa Bontosunggu.
+        </p>
+
+        <div class="dusun-container">
+
+            <div class="dusun">Sorobaya</div>
+            <div class="dusun">Tamalate</div>
+            <div class="dusun">Gallang</div>
+            <div class="dusun">Kampung Beru</div>
+            <div class="dusun">Bonto Ciniayo</div>
 
         </div>
 
     </div>
 
+</section>
 
-    <!-- PROFIL -->
-    <section id="profil">
 
-        <div class="section-title">
+<!-- POTENSI -->
+<section id="potensi">
 
-            <h2>
-                Tentang Bontosunggu
-            </h2>
+    <div class="section-title">
 
-            <p>
-                Mengenal potensi dan karakteristik Desa Bontosunggu
-            </p>
-
-        </div>
-
-        <div class="about">
-
-            <p>
-                <strong>Bontosunggu Digital</strong> merupakan
-                platform informasi dan pemetaan digital Desa
-                Bontosunggu yang bertujuan untuk menyajikan
-                informasi mengenai potensi, fasilitas, wilayah,
-                serta berbagai sumber daya yang terdapat di desa.
-            </p>
-
-            <br>
-
-            <p>
-                Website ini dikembangkan sebagai media informasi
-                dan dokumentasi digital untuk membantu masyarakat
-                mengenal Desa Bontosunggu secara lebih mudah,
-                interaktif, dan informatif.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- DATA -->
-    <section>
-
-        <div class="section-title">
-
-            <h2>
-                Informasi Desa
-            </h2>
-
-            <p>
-                Data dan informasi yang tersedia
-            </p>
-
-        </div>
-
-        <div class="cards">
-
-            <div class="card">
-
-                <div class="icon">🗺️</div>
-
-                <h3>
-                    Peta Desa
-                </h3>
-
-                <p>
-                    Pemetaan wilayah dan batas Desa Bontosunggu.
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="icon">🌾</div>
-
-                <h3>
-                    Potensi Desa
-                </h3>
-
-                <p>
-                    Informasi mengenai potensi sumber daya desa.
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="icon">🏫</div>
-
-                <h3>
-                    Fasilitas
-                </h3>
-
-                <p>
-                    Informasi fasilitas umum yang terdapat di desa.
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="icon">🏘️</div>
-
-                <h3>
-                    Data Dusun
-                </h3>
-
-                <p>
-                    Informasi wilayah dan pembagian dusun.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- PETA -->
-    <section id="peta">
-
-        <div class="section-title">
-
-            <h2>
-                🗺️ Peta Desa
-            </h2>
-
-            <p>
-                Peta interaktif Desa Bontosunggu akan tersedia di sini.
-            </p>
-
-        </div>
-
-        <div class="about">
-
-            <p style="text-align:center; font-size:18px;">
-
-                🚧 <strong>Peta sedang dalam tahap pengembangan.</strong>
-
-                <br><br>
-
-                Nantinya bagian ini akan menampilkan
-                peta interaktif Desa Bontosunggu,
-                batas dusun, fasilitas umum,
-                potensi desa, UMKM, dan berbagai
-                informasi geografis lainnya.
-
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- POTENSI -->
-    <section id="potensi">
-
-        <div class="section-title">
-
-            <h2>
-                🌾 Potensi Desa
-            </h2>
-
-            <p>
-                Potensi yang dimiliki Desa Bontosunggu
-            </p>
-
-        </div>
-
-        <div class="cards">
-
-            <div class="card">
-
-                <div class="icon">🌱</div>
-
-                <h3>
-                    Pertanian
-                </h3>
-
-                <p>
-                    Data potensi pertanian Desa Bontosunggu.
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="icon">🛍️</div>
-
-                <h3>
-                    UMKM
-                </h3>
-
-                <p>
-                    Data dan informasi usaha masyarakat desa.
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="icon">👨‍👩‍👧‍👦</div>
-
-                <h3>
-                    Masyarakat
-                </h3>
-
-                <p>
-                    Potensi sumber daya manusia desa.
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="icon">🏞️</div>
-
-                <h3>
-                    Lingkungan
-                </h3>
-
-                <p>
-                    Potensi lingkungan dan sumber daya alam.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- FASILITAS -->
-    <section id="fasilitas">
-
-        <div class="section-title">
-
-            <h2>
-                🏢 Fasilitas Desa
-            </h2>
-
-            <p>
-                Fasilitas umum Desa Bontosunggu
-            </p>
-
-        </div>
-
-        <div class="about">
-
-            <p>
-                Data fasilitas desa akan dikembangkan
-                dan dipetakan secara bertahap.
-            </p>
-
-            <br>
-
-            <p>
-                Contohnya meliputi sekolah, tempat ibadah,
-                fasilitas kesehatan, kantor pemerintahan,
-                lapangan, jalan, dan fasilitas umum lainnya.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- FOOTER -->
-    <footer>
+        <h2>Potensi Desa</h2>
 
         <p>
-            <strong>BONTOSUNGGU DIGITAL</strong>
+            Potensi utama yang terdapat di Desa Bontosunggu
         </p>
+
+    </div>
+
+    <div class="cards">
+
+        <!-- JAGUNG -->
+        <div class="card">
+
+            <div class="card-image">
+                🌽
+            </div>
+
+            <div class="card-content">
+
+                <h3>Perkebunan Jagung</h3>
+
+                <p>
+                    Salah satu potensi sektor pertanian dan perkebunan
+                    yang terdapat di Desa Bontosunggu.
+                </p>
+
+                <a
+                    href="https://www.google.com/maps/search/?api=1&query=Perkebunan+Jagung+Desa+Bontosunggu"
+                    target="_blank"
+                    class="maps-btn">
+                    📍 Buka Alamat Maps
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- SAWAH -->
+        <div class="card">
+
+            <div class="card-image">
+                🌾
+            </div>
+
+            <div class="card-content">
+
+                <h3>Sawah</h3>
+
+                <p>
+                    Area persawahan menjadi salah satu potensi pertanian
+                    yang dapat ditemukan di Desa Bontosunggu.
+                </p>
+
+                <a
+                    href="https://www.google.com/maps/search/?api=1&query=Sawah+Desa+Bontosunggu"
+                    target="_blank"
+                    class="maps-btn">
+                    📍 Buka Alamat Maps
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- CABAI -->
+        <div class="card">
+
+            <div class="card-image">
+                🌶️
+            </div>
+
+            <div class="card-content">
+
+                <h3>Perkebunan Cabai</h3>
+
+                <p>
+                    Perkebunan cabai merupakan salah satu potensi
+                    pertanian yang terdapat di Desa Bontosunggu.
+                </p>
+
+                <a
+                    href="https://www.google.com/maps/search/?api=1&query=Perkebunan+Cabai+Desa+Bontosunggu"
+                    target="_blank"
+                    class="maps-btn">
+                    📍 Buka Alamat Maps
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DUSUN -->
+<section class="dusun-section">
+
+    <div class="section-title">
+
+        <h2>Wilayah Dusun</h2>
 
         <p>
-            Pemetaan Potensi & Informasi Desa Bontosunggu
+            Lima dusun di Desa Bontosunggu
         </p>
+
+    </div>
+
+    <div class="dusun-grid">
+
+        <div class="dusun-card">
+            <span>📍</span>
+            <h3>Sorobaya</h3>
+        </div>
+
+        <div class="dusun-card">
+            <span>📍</span>
+            <h3>Tamalate</h3>
+        </div>
+
+        <div class="dusun-card">
+            <span>📍</span>
+            <h3>Gallang</h3>
+        </div>
+
+        <div class="dusun-card">
+            <span>📍</span>
+            <h3>Kampung Beru</h3>
+        </div>
+
+        <div class="dusun-card">
+            <span>📍</span>
+            <h3>Bonto Ciniayo</h3>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FASILITAS -->
+<section id="fasilitas">
+
+    <div class="section-title">
+
+        <h2>Fasilitas Umum</h2>
 
         <p>
-            © 2026 Desa Bontosunggu
+            Sarana dan prasarana yang terdapat di Desa Bontosunggu
         </p>
 
-    </footer>
+    </div>
+
+    <div class="cards">
+
+        <!-- KANTOR DESA -->
+        <div class="card">
+
+            <div class="card-image">
+                🏢
+            </div>
+
+            <div class="card-content">
+
+                <h3>Kantor Desa</h3>
+
+                <p>
+                    Pusat pelayanan dan administrasi pemerintahan
+                    Desa Bontosunggu.
+                </p>
+
+                <a
+                    href="https://www.google.com/maps/search/?api=1&query=Kantor+Desa+Bontosunggu"
+                    target="_blank"
+                    class="maps-btn">
+                    📍 Buka Alamat Maps
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- SD -->
+        <div class="card">
+
+            <div class="card-image">
+                🏫
+            </div>
+
+            <div class="card-content">
+
+                <h3>SD Inpres Sorobaya</h3>
+
+                <p>
+                    Salah satu fasilitas pendidikan yang berada
+                    di wilayah Desa Bontosunggu.
+                </p>
+
+                <a
+                    href="https://www.google.com/maps/search/?api=1&query=SD+Inpres+Sorobaya"
+                    target="_blank"
+                    class="maps-btn">
+                    📍 Buka Alamat Maps
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- POSYANDU -->
+        <div class="card">
+
+            <div class="card-image">
+                🏥
+            </div>
+
+            <div class="card-content">
+
+                <h3>Posyandu</h3>
+
+                <p>
+                    Fasilitas pelayanan kesehatan masyarakat
+                    di Desa Bontosunggu.
+                </p>
+
+                <a
+                    href="https://www.google.com/maps/search/?api=1&query=Posyandu+Desa+Bontosunggu"
+                    target="_blank"
+                    class="maps-btn">
+                    📍 Buka Alamat Maps
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- LAPANGAN -->
+        <div class="card">
+
+            <div class="card-image">
+                ⚽
+            </div>
+
+            <div class="card-content">
+
+                <h3>Lapangan Desa</h3>
+
+                <p>
+                    Ruang terbuka yang dapat dimanfaatkan untuk
+                    kegiatan olahraga dan aktivitas masyarakat.
+                </p>
+
+                <a
+                    href="https://www.google.com/maps/search/?api=1&query=Lapangan+Desa+Bontosunggu"
+                    target="_blank"
+                    class="maps-btn">
+                    📍 Buka Alamat Maps
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- MASJID -->
+        <div class="card">
+
+            <div class="card-image">
+                🕌
+            </div>
+
+            <div class="card-content">
+
+                <h3>Masjid</h3>
+
+                <p>
+                    Salah satu fasilitas keagamaan yang digunakan
+                    oleh masyarakat Desa Bontosunggu.
+                </p>
+
+                <a
+                    href="https://www.google.com/maps/search/?api=1&query=Masjid+Desa+Bontosunggu"
+                    target="_blank"
+                    class="maps-btn">
+                    📍 Buka Alamat Maps
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <p>
+        <strong>Pemetaan Digital Desa Bontosunggu</strong>
+    </p>
+
+    <p>
+        © 2026 KKN 79 UIN Alauddin Makassar - Desa Bontosunggu
+    </p>
+
+</footer>
+
 
 </body>
 </html>
