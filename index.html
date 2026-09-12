@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pemetaan Digital Potensi & Fasilitas Desa Bontosunggu</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;scroll-behavior:smooth}
+body{font-family:Arial,Helvetica,sans-serif;background:#f5f7fa;color:#26332b;line-height:1.6}
+header{position:sticky;top:0;z-index:1000;background:#fff;box-shadow:0 2px 12px #00000014;padding:12px 6%;display:flex;justify-content:space-between;align-items:center}
+.logo{display:flex;align-items:center;gap:10px;color:#176b3a;font-weight:700;font-size:18px}
+.logo img{width:42px;height:42px;object-fit:contain}
+nav{display:flex;gap:24px}
+nav a{text-decoration:none;color:#333;font-weight:600}
+nav a:hover{color:#176b3a}
+.hero{min-height:72vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px;color:#fff;background:linear-gradient(#07562dcc,#06351ed9),url("IMG_7194.JPG") center/cover}
+.hero-content{max-width:900px}
+.hero h1{font-size:46px;line-height:1.15;margin-bottom:18px}
+.hero p{font-size:18px;max-width:760px;margin:0 auto 28px}
+.buttons{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:700;background:#fff;color:#176b3a}
+section{padding:65px 6%}
+.title{text-align:center;margin-bottom:38px}
+.title h2{color:#176b3a;font-size:32px;margin-bottom:7px}
+.title p{color:#69736d}
+.intro{background:#fff;text-align:center}
+.intro p{max-width:850px;margin:auto;color:#56615b}
+.dusun-list{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:24px}
+.dusun{background:#e9f5ed;color:#176b3a;padding:9px 15px;border-radius:30px;font-weight:700}
+.section-alt{background:#eef4f0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:22px}
+.card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 4px 16px #00000010}
+.card img{width:100%;height:190px;object-fit:cover;display:block}
+.card-body{padding:19px}
+.badge{display:inline-block;background:#e9f5ed;color:#176b3a;border-radius:20px;padding:4px 9px;font-size:12px;font-weight:700;margin-bottom:9px}
+.card h3{color:#176b3a;font-size:20px;margin-bottom:5px}
+.card p{color:#606b64;font-size:14px;margin-bottom:14px}
+.maps{display:inline-block;background:#176b3a;color:#fff;text-decoration:none;padding:8px 12px;border-radius:7px;font-size:13px;font-weight:700}
+.maps:hover{background:#0e4d29}
+
+/* POTENSI DESA: dusun tetap vertikal, potensi di dalamnya digeser horizontal */
+.potensi-dusun{margin-bottom:48px;scroll-margin-top:90px}
+.potensi-dusun:last-child{margin-bottom:0}
+.dusun-heading{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:16px}
+.dusun-heading h3{color:#176b3a;font-size:25px}
+.dusun-heading span{font-size:13px;color:#69736d}
+.potensi-slider{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px 18px 2px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.potensi-slider::-webkit-scrollbar{height:7px}
+.potensi-slider::-webkit-scrollbar-thumb{background:#b7cdbd;border-radius:10px}
+.potensi-card{flex:0 0 min(78vw,330px);scroll-snap-align:start;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 16px #00000012}
+.potensi-visual{height:190px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#176b3a,#4b9c69);color:#fff;font-size:64px}
+.potensi-body{padding:18px}
+.potensi-body .badge{margin-bottom:8px}
+.potensi-body h4{font-size:21px;color:#176b3a;margin-bottom:4px}
+.potensi-body p{font-size:14px;color:#606b64}
+.swipe-note{text-align:center;color:#6c776f;font-size:13px;margin:4px 0 28px}
+.slider-dots{display:flex;justify-content:center;gap:7px;margin-top:3px}
+.slider-dots i{width:7px;height:7px;border-radius:50%;background:#b8c8bc;display:block}
+.slider-dots i:first-child{background:#176b3a}
+
+.map-wrap{background:#fff;padding:15px;border-radius:14px;box-shadow:0 4px 16px #00000010}
+#map{height:480px;border-radius:10px}
+.legend{margin-top:15px;color:#5d675f;font-size:13px;text-align:center}
+footer{background:#123d26;color:#fff;text-align:center;padding:28px 20px;font-size:14px}
+@media(max-width:700px){
+header{flex-direction:column;gap:8px}
+nav{gap:14px;font-size:13px}
+.hero h1{font-size:32px}
+.hero p{font-size:16px}
+section{padding:50px 5%}
+#map{height:400px}
+.dusun-heading h3{font-size:22px}
+.potensi-card{flex-basis:82vw}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="IMG_7194.JPG" alt="Logo Desa Bontosunggu">
+    <span>Desa Bontosunggu</span>
+  </div>
+  <nav>
+    <a href="#beranda">Beranda</a>
+    <a href="#potensi">Potensi Desa</a>
+    <a href="#fasilitas">Fasilitas Umum</a>
+    <a href="#peta">Peta Desa</a>
+  </nav>
+</header>
+
+<section class="hero" id="beranda">
+  <div class="hero-content">
+    <h1>Pemetaan Digital Potensi &amp; Fasilitas Desa Bontosunggu</h1>
+    <p>Jelajahi potensi desa serta fasilitas umum Desa Bontosunggu melalui informasi lokasi dan peta digital.</p>
+    <div class="buttons">
+      <a class="btn" href="#potensi">Jelajahi Potensi</a>
+      <a class="btn" href="#fasilitas">Lihat Fasilitas</a>
+    </div>
+  </div>
+</section>
+
+<section class="intro">
+  <div class="title">
+    <h2>Desa Bontosunggu</h2>
+    <p>Lima dusun dalam wilayah Desa Bontosunggu</p>
+  </div>
+  <p>Website ini menyajikan informasi awal mengenai potensi dan fasilitas yang telah didata dalam kegiatan pemetaan digital Desa Bontosunggu.</p>
+  <div class="dusun-list">
+    <span class="dusun">Sorobaya</span>
+    <span class="dusun">Tamalate</span>
+    <span class="dusun">Gallang</span>
+    <span class="dusun">Kampung Beru</span>
+    <span class="dusun">Bonto Ciniayo</span>
+  </div>
+</section>
+
+<section id="potensi" class="section-alt">
+  <div class="title">
+    <h2>Potensi Desa</h2>
+    <p>Potensi Desa Bontosunggu berdasarkan masing-masing dusun</p>
+  </div>
+  <p class="swipe-note">↔ Geser ke samping untuk melihat potensi lainnya dalam setiap dusun</p>
+
+  <div class="potensi-dusun">
+    <div class="dusun-heading"><h3>Dusun Gallang</h3><span>2 potensi</span></div>
+    <div class="potensi-slider">
+      <div class="potensi-card"><div class="potensi-visual">🦐</div><div class="potensi-body"><span class="badge">Perikanan</span><h4>Tambak Udang</h4><p>Potensi perikanan tambak yang terdapat di Dusun Gallang.</p></div></div>
+      <div class="potensi-card"><div class="potensi-visual">🐟</div><div class="potensi-body"><span class="badge">Perikanan</span><h4>Tambak Ikan</h4><p>Potensi perikanan tambak yang terdapat di Dusun Gallang.</p></div></div>
+    </div>
+    <div class="slider-dots"><i></i><i></i></div>
+  </div>
+
+  <div class="potensi-dusun">
+    <div class="dusun-heading"><h3>Dusun Tamalate</h3><span>2 potensi</span></div>
+    <div class="potensi-slider">
+      <div class="potensi-card"><div class="potensi-visual">🌽</div><div class="potensi-body"><span class="badge">Pertanian</span><h4>Jagung</h4><p>Potensi pertanian berupa jagung di Dusun Tamalate.</p></div></div>
+      <div class="potensi-card"><div class="potensi-visual">🌶️</div><div class="potensi-body"><span class="badge">Pertanian</span><h4>Cabai</h4><p>Potensi pertanian berupa cabai di Dusun Tamalate.</p></div></div>
+    </div>
+    <div class="slider-dots"><i></i><i></i></div>
+  </div>
+
+  <div class="potensi-dusun">
+    <div class="dusun-heading"><h3>Dusun Kampung Beru</h3><span>2 potensi</span></div>
+    <div class="potensi-slider">
+      <div class="potensi-card"><div class="potensi-visual">🌽</div><div class="potensi-body"><span class="badge">Pertanian</span><h4>Jagung</h4><p>Potensi pertanian berupa jagung di Dusun Kampung Beru.</p></div></div>
+      <div class="potensi-card"><div class="potensi-visual">🌾</div><div class="potensi-body"><span class="badge">Pertanian</span><h4>Padi</h4><p>Potensi pertanian berupa padi di Dusun Kampung Beru.</p></div></div>
+    </div>
+    <div class="slider-dots"><i></i><i></i></div>
+  </div>
+
+  <div class="potensi-dusun">
+    <div class="dusun-heading"><h3>Dusun Sorobaya</h3><span>2 potensi</span></div>
+    <div class="potensi-slider">
+      <div class="potensi-card"><div class="potensi-visual">🌽</div><div class="potensi-body"><span class="badge">Pertanian</span><h4>Jagung</h4><p>Potensi pertanian berupa jagung di Dusun Sorobaya.</p></div></div>
+      <div class="potensi-card"><div class="potensi-visual">🌾</div><div class="potensi-body"><span class="badge">Pertanian</span><h4>Padi</h4><p>Potensi pertanian berupa padi di Dusun Sorobaya.</p></div></div>
+    </div>
+    <div class="slider-dots"><i></i><i></i></div>
+  </div>
+
+  <div class="potensi-dusun">
+    <div class="dusun-heading"><h3>Dusun Bonto Ciniayo</h3><span>2 potensi</span></div>
+    <div class="potensi-slider">
+      <div class="potensi-card"><div class="potensi-visual">🌽</div><div class="potensi-body"><span class="badge">Pertanian</span><h4>Jagung</h4><p>Potensi pertanian berupa jagung di Dusun Bonto Ciniayo.</p></div></div>
+      <div class="potensi-card"><div class="potensi-visual">🌾</div><div class="potensi-body"><span class="badge">Pertanian</span><h4>Padi</h4><p>Potensi pertanian berupa padi di Dusun Bonto Ciniayo.</p></div></div>
+    </div>
+    <div class="slider-dots"><i></i><i></i></div>
+  </div>
+</section>
+
+<section id="fasilitas">
+  <div class="title">
+    <h2>Fasilitas Umum</h2>
+    <p>Fasilitas yang telah didata beserta titik koordinatnya</p>
+  </div>
+  <div class="cards">
+    <div class="card"><img src="kantor-desa-bontosunggu.jpg" alt="Kantor Desa Bontosunggu"><div class="card-body"><span class="badge">Pemerintahan · Bonto Ciniayo</span><h3>Kantor Desa Bontosunggu</h3><p>Pusat pelayanan pemerintahan Desa Bontosunggu.</p><a class="maps" target="_blank" href="https://www.google.com/maps?q=-5.4157470,119.3858247">📍 Buka di Google Maps</a></div></div>
+    <div class="card"><img src="lapangan-desa-bontosunggu.jpg" alt="Lapangan Desa Bontosunggu"><div class="card-body"><span class="badge">Olahraga · Kampung Beru</span><h3>Lapangan Desa Bontosunggu</h3><p>Fasilitas olahraga dan ruang aktivitas masyarakat.</p><a class="maps" target="_blank" href="https://www.google.com/maps?q=-5.4102627,119.3837419">📍 Buka di Google Maps</a></div></div>
+    <div class="card"><img src="sd-negeri-bontociniayo.jpg" alt="SD Negeri Bontociniayo"><div class="card-body"><span class="badge">Pendidikan · Bonto Ciniayo</span><h3>SD Negeri Bontociniayo</h3><p>Fasilitas pendidikan di wilayah Bonto Ciniayo.</p><a class="maps" target="_blank" href="https://www.google.com/maps?q=-5.4162464,119.3864452">📍 Buka di Google Maps</a></div></div>
+    <div class="card"><img src="tk-paud-karebitte.jpg" alt="TK Paud Karebitte"><div class="card-body"><span class="badge">Pendidikan · Kampung Beru</span><h3>TK Paud Karebitte</h3><p>Fasilitas pendidikan anak usia dini.</p><a class="maps" target="_blank" href="https://www.google.com/maps?q=-5.4100998,119.3844738">📍 Buka di Google Maps</a></div></div>
+    <div class="card"><img src="sd-inpres-sorobaya.jpg" alt="SD Inpres Sorobaya"><div class="card-body"><span class="badge">Pendidikan · Sorobaya</span><h3>SD Inpres Sorobaya</h3><p>Fasilitas pendidikan di wilayah Sorobaya.</p><a class="maps" target="_blank" href="https://www.google.com/maps?q=-5.4101535,119.3869307">📍 Buka di Google Maps</a></div></div>
+    <div class="card"><img src="mushollah-dg-pato.jpg" alt="Mushollah Dg Pato"><div class="card-body"><span class="badge">Keagamaan · Kampung Beru</span><h3>Mushollah Dg Pato</h3><p>Fasilitas ibadah masyarakat di Kampung Beru.</p><a class="maps" target="_blank" href="https://www.google.com/maps?q=-5.4095010,119.3831284">📍 Buka di Google Maps</a></div></div>
+    <div class="card"><img src="masjid-h-nandiong.jpg" alt="Masjid H. Handiong Dg. Ngomoa"><div class="card-body"><span class="badge">Keagamaan · Kampung Beru</span><h3>Masjid H. Handiong Dg. Ngomoa</h3><p>Fasilitas ibadah masyarakat di Kampung Beru.</p><a class="maps" target="_blank" href="https://www.google.com/maps?q=-5.4082346,119.3837493">📍 Buka di Google Maps</a></div></div>
+    <div class="card"><img src="pesantren-abnaul-amir.jpg" alt="Pesantren Abnaul Amir"><div class="card-body"><span class="badge">Pendidikan · Bonto Ciniayo</span><h3>Pesantren Abnaul Amir</h3><p>Fasilitas pendidikan keagamaan di wilayah Bonto Ciniayo.</p><a class="maps" target="_blank" href="https://www.google.com/maps?q=-5.4122414,119.3939414">📍 Buka di Google Maps</a></div></div>
+    <div class="card"><img src="masjid-al-ikhlas-tamalate.jpg" alt="Masjid Al-Ikhlas Tamalate"><div class="card-body"><span class="badge">Keagamaan · Tamalate</span><h3>Masjid Al-Ikhlas Tamalate</h3><p>Fasilitas ibadah masyarakat di Tamalate.</p><a class="maps" target="_blank" href="https://www.google.com/maps?q=-5.4166730,119.3779225">📍 Buka di Google Maps</a></div></div>
+    <div class="card"><img src="sd-inpres-gallang.jpg" alt="SD Inpres Gallang"><div class="card-body"><span class="badge">Pendidikan · Gallang</span><h3>SD Inpres Gallang</h3><p>Fasilitas pendidikan di wilayah Gallang.</p><a class="maps" target="_blank" href="https://www.google.com/maps?q=-5.4162554,119.3765211">📍 Buka di Google Maps</a></div></div>
+    <div class="card"><img src="posyandu-melati-tamalate.jpg" alt="Posyandu Melati Tamalate"><div class="card-body"><span class="badge">Kesehatan · Tamalate</span><h3>Posyandu Melati Tamalate</h3><p>Fasilitas pelayanan kesehatan masyarakat di Tamalate.</p><a class="maps" target="_blank" href="https://www.google.com/maps?q=-5.4174013,119.3799174">📍 Buka di Google Maps</a></div></div>
+    <div class="card"><img src="mis-muhammadiyah-gallang.jpg" alt="MIS Muhammadiyah Gallang"><div class="card-body"><span class="badge">Pendidikan · Gallang</span><h3>MIS Muhammadiyah Gallang</h3><p>Fasilitas pendidikan di wilayah Gallang.</p><a class="maps" target="_blank" href="https://www.google.com/maps?q=-5.4217654,119.3760225">📍 Buka di Google Maps</a></div></div>
+    <div class="card"><img src="masjid-nurul-yaqin-gallang.jpg" alt="Masjid Nurul Yaqin Gallang"><div class="card-body"><span class="badge">Keagamaan · Gallang</span><h3>Masjid Nurul Yaqin Gallang</h3><p>Fasilitas ibadah masyarakat di Gallang.</p><a class="maps" target="_blank" href="https://www.google.com/maps?q=-5.4211743,119.3778679">📍 Buka di Google Maps</a></div></div>
+    <div class="card"><img src="posyandu-sorobaya.jpg" alt="Posyandu Sorobaya"><div class="card-body"><span class="badge">Kesehatan · Sorobaya</span><h3>Posyandu Sorobaya</h3><p>Fasilitas pelayanan kesehatan masyarakat di Sorobaya.</p><a class="maps" target="_blank" href="https://www.google.com/maps?q=-5.4047953,119.3864758">📍 Buka di Google Maps</a></div></div>
+    <div class="card"><img src="masjid-al-furqan-tamalate.jpg" alt="Masjid Al-Furqan Tamalate"><div class="card-body"><span class="badge">Keagamaan · Tamalate</span><h3>Masjid Al-Furqan Tamalate</h3><p>Fasilitas ibadah masyarakat di Tamalate.</p><a class="maps" target="_blank" href="https://www.google.com/maps?q=-5.4179250,119.3801146">📍 Buka di Google Maps</a></div></div>
+  </div>
+</section>
+
+<section id="peta" class="section-alt">
+  <div class="title">
+    <h2>🗺️ Peta Digital Desa Bontosunggu</h2>
+    <p>Persebaran fasilitas yang telah didata berdasarkan titik koordinat.</p>
+  </div>
+  <div class="map-wrap"><div id="map"></div><div class="legend">Klik marker untuk melihat nama, dusun, koordinat, dan tautan Google Maps.</div></div>
+</section>
+
+<footer>
+  <strong>Pemetaan Digital Potensi &amp; Fasilitas Desa Bontosunggu</strong>
+  <p>© 2026 KKN 79 UIN Alauddin Makassar · Desa Bontosunggu</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const locations = [
+  {name:"Kantor Desa Bontosunggu",dusun:"Bonto Ciniayo",lat:-5.4157470,lng:119.3858247},
+  {name:"Lapangan Desa Bontosunggu",dusun:"Kampung Beru",lat:-5.4102627,lng:119.3837419},
+  {name:"SD Negeri Bontociniayo",dusun:"Bonto Ciniayo",lat:-5.4162464,lng:119.3864452},
+  {name:"TK Paud Karebitte",dusun:"Kampung Beru",lat:-5.4100998,lng:119.3844738},
+  {name:"SD Inpres Sorobaya",dusun:"Sorobaya",lat:-5.4101535,lng:119.3869307},
+  {name:"Mushollah Dg Pato",dusun:"Kampung Beru",lat:-5.4095010,lng:119.3831284},
+  {name:"Masjid H. Handiong Dg. Ngomoa",dusun:"Kampung Beru",lat:-5.4082346,lng:119.3837493},
+  {name:"Pesantren Abnaul Amir",dusun:"Bonto Ciniayo",lat:-5.4122414,lng:119.3939414},
+  {name:"Masjid Al-Ikhlas Tamalate",dusun:"Tamalate",lat:-5.4166730,lng:119.3779225},
+  {name:"SD Inpres Gallang",dusun:"Gallang",lat:-5.4162554,lng:119.3765211},
+  {name:"Posyandu Melati Tamalate",dusun:"Tamalate",lat:-5.4174013,lng:119.3799174},
+  {name:"MIS Muhammadiyah Gallang",dusun:"Gallang",lat:-5.4217654,lng:119.3760225},
+  {name:"Masjid Nurul Yaqin Gallang",dusun:"Gallang",lat:-5.4211743,lng:119.3778679},
+  {name:"Posyandu Sorobaya",dusun:"Sorobaya",lat:-5.4047953,lng:119.3864758},
+  {name:"Masjid Al-Furqan Tamalate",dusun:"Tamalate",lat:-5.4179250,lng:119.3801146}
+];
+const map = L.map('map').setView([-5.414,119.384],15);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map);
+const bounds=[];
+locations.forEach(x=>{
+  const marker=L.marker([x.lat,x.lng]).addTo(map);
+  marker.bindPopup(`<strong>${x.name}</strong><br>Dusun ${x.dusun}<br><small>${x.lat}, ${x.lng}</small><br><br><a href="https://www.google.com/maps?q=${x.lat},${x.lng}" target="_blank">📍 Buka di Google Maps</a>`);
+  bounds.push([x.lat,x.lng]);
+});
+map.fitBounds(bounds,{padding:[25,25]});
+</script>
+</body>
+</html>
